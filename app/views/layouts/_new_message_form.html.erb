@@ -1,0 +1,24 @@
+<div class="msg-form flex items-center rounded-xl bg-gray-900">
+  <%= form_with(model: [@single_room, @message], remote: true, class:'flex items-center gap-3 w-full p-1 rounded-xl',
+  data: { controller: "reset-form", action: "turbo:submit-end->reset-form#reset"}) do |f| %>
+    <div id="attachment-previews"
+      data-controller="message-preview"
+      data-action="message-preview#preview"
+      >
+    </div>
+    <div class="image-upload flex items-center">
+      <label for="message_attachments">
+        <i class="bi bi-plus-circle upload-button"></i>
+      </label>
+      <%= f.file_field(:attachments, multiple: true,
+        data:{controller: "message-preview", action:"change->message-preview#preview"}) %>
+    </div>
+      <%= f.text_field :body, id: 'chat-text', class: 'text-xs bg-gray-800 rounded-full border-none w-4/5  msg-content',  autocomplete: 'off' %>
+    <%= f.submit "Kirim",
+      data: {disable_with: false,
+      controller: "message-preview",
+      action:"click->message-preview#clearPreviews"},
+      class: 'bg-gray-800 px-2 w-20 rounded-full' %>
+  </div>
+<% end %>
+</div>

@@ -1,0 +1,5 @@
+<%= form_with(model: @room, remote: true, class:'flex gap-4 mb-3',
+  data: { controller: "reset-form", action: "turbo:submit-end->reset-form#reset"}) do |f| %>
+  <%= f.text_field :name, class: 'form-control', autocomplete: 'off', class:'w-full bg-gray-900 rounded-full' %>
+  <%= f.submit "Create", data: {disable_with: false}, class:'px-3 bg-gray-800 rounded-full font-bold' %>
+<% end %>

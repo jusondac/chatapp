@@ -1,0 +1,17 @@
+<% if @single_room && @single_room.participant?(@single_room, user) %>
+  <% isActive = 'active' %>
+<% else %>
+  <% isActive = '' %>
+<% end %>
+<div class="bg-gray-800 flex items-center p-2 rounded-xl my-2 gap-2">
+  <div class="w-10 relative h-10">
+    <%= link_to image_tag(user.chat_avatar, class: 'h-10 w-10 rounded-full absolute z-10 object-cover top-0 m-auto'), user %>
+  </div>
+  <div class="text-white text-lg">
+    <%= link_to user.email[/\w+/].gsub("_"," ").capitalize, user, class:'text-white font-bold', data: {turbo: "false"}%>
+    <%= turbo_stream_from "user_status" %>
+    <div>
+      <%= render "users/status", user: user %>
+    </div>
+  </div>
+</div>

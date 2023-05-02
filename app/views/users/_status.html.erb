@@ -1,0 +1,4 @@
+<%= turbo_frame_tag "user_status" %>
+<div class="rounded-full text-xs font-italic bg-gray-900 w-20 flex items-center justify-center" id="<%= dom_id(user) %>">
+  <%= user.status %>
+</div>

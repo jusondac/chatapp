@@ -1,0 +1,36 @@
+<div class="cont-<%=message.user.id%>">
+  <div class="rounded-xl my-1 flex items-center msg">
+    <div class="flex gap-2 items-center">
+      <% unless message.room.is_private %>
+        <% unless message.previous_message.present? && message.previous_message.user_id.eql?(message.user.id) %>
+          <%= image_tag message.user.chat_avatar, class:'h-10 w-10 rounded-full object-cover' %>
+        <% end %>
+      <% end %>
+      <div class="flex flex-col <%= message.previous_message.present? && message.previous_message.user_id.eql?(message.user.id) && message.room&.is_private.eql?(false) ? 'ml-5' : '' %>">
+        <div class="text-xs text-gray-400 ml-1 user-display ">
+          <% unless message.previous_message.present? && message.previous_message.user_id.eql?(message.user.id)  %>
+            <%= message.user.email[/\w+/].gsub("_"," ").capitalize unless message.room.is_private %>
+          <% end %>
+        </div>
+
+        <div class="bg-gray-900 py-2 px-3 rounded-xl max-w-xl flex gap-3 shadow-xl text-sm text-gray-300">
+          <div><%= message.body %></div>
+          <div class="text-[9px] flex items-end min-w-[45px] text-gray-400"><%= message.created_at.strftime("%H.%M %p") %></div>
+        </div>
+      </div>
+    </div>
+    <% if message.attachments.attached? %>
+      <% message.attachments.each_with_index do |attachment, index| %>
+        <% if attachment.image? %>
+          <%= image_tag(message.chat_attachment(index), class:'rounded-xl w-40') %>
+        <% elsif attachment.video? %>
+          <%= video_tag(url_for(attachment), style:'height:auto; width:100%', controls:'') %>
+        <% elsif attachment.audio? %>
+          <%= audio_tag(url_for(attachment), controls: '') %>
+        <% else %>
+          <%= link_to attachment.filename, url_for(attachment), style:"text-decoration: none; color: #fff" %>
+        <% end %>
+      <% end %>
+    <% end %>
+  </div>
+</div>

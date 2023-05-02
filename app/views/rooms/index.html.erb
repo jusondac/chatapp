@@ -1,0 +1,62 @@
+<%= turbo_frame_tag "appearance_channel" %>
+<div id="appearance_channel"></div>
+<div id="chatroom_container" class="flex gap-3 w-full h-5/6">
+  <div id="side_panel" class="w-1/3">
+    <div class="bg-gray-800 flex items-start p-2 rounded-xl gap-2 flex-col shadow-xl">
+      <div class="font-bold text-2xl flex items-center gap-2">
+        Whatsapp
+      </div>
+      <div class="flex w-full gap-3 justify-between">
+        <div class="flex gap-3">
+          <div clas="w-10 relative h-10">
+            <%= link_to image_tag(current_user.chat_avatar, class: 'h-10 w-10 object-cover rounded-full z-10 top-0 m-auto'), current_user %>
+          </div>
+          <div class="text-white text-lg">
+            <span class="font-bold"><%= current_user.email[/\w+/].gsub("_"," ").capitalize %></span>
+            <%= turbo_stream_from "user_status" %>
+            <div>
+              <%= render "users/status", user: current_user %>
+            </div>
+          </div>
+        </div>
+        <div>
+          <%= button_to destroy_user_session_path, method: :delete, class:'py-1 px-3 text-xs px-3 bg-gray-900 text-gray-400 rounded-2xl' do %>
+            <svg aria-hidden="true" class="h-6 w-6" fill="none" stroke="currentColor" stroke-width="1.5" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+              <path d="M15.75 9V5.25A2.25 2.25 0 0013.5 3h-6a2.25 2.25 0 00-2.25 2.25v13.5A2.25 2.25 0 007.5 21h6a2.25 2.25 0 002.25-2.25V15M12 9l-3 3m0 0l3 3m-3-3h12.75" stroke-linecap="round" stroke-linejoin="round"></path>
+            </svg>
+          <% end %>
+        </div>
+      </div>
+    </div>
+    <div class="flex w-fullmy-2 py-2 gap-3">
+      <%= link_to 'Obrolan', personal_chat_rooms_path, data:{turbo_frame: 'message_type'}, class:'bg-gray-800 rounded-full w-1/2 p-1 text-center text-gray-300 shadow-2xl'  %>
+      <%= link_to 'Ruangan', group_chat_rooms_path, data:{turbo_frame: 'message_type'}, class:'bg-gray-800 rounded-full w-1/2 p-1 text-center text-gray-300 shadow-2xl'  %>
+    </div>
+    <%= turbo_frame_tag 'message_type' do %>
+      <div class="w-full h-1/2 flex items-center justify-center text-gray-500 italic">
+        pilih pesan
+      </div>
+    <% end %>
+  </div>
+  <div id="room_container"  class="w-2/3 rounded-xl h-4/5 bg-gray-800">
+    <% if @single_room %>
+      <div id="single_room" class="h-96 px-2">
+        <div class="border-b border-gray-700 py-2 pl-3 shadow-2xl">
+          <% if @user.nil? %>
+            <h4 class="text-md font-bold"> <%= @single_room.name %> </h4>
+          <% else %>
+            <div class="text-md font-bold flex gap-5 items-center">
+              <%= image_tag @user.chat_avatar, class:'h-10 w-10 object-cover rounded-full' %>
+              <%= @user&.email[/\w+/].gsub("_"," ").capitalize %>
+            </div>
+          <% end %>
+        </div>
+        <%= turbo_stream_from @single_room %>
+        <div id="messages" data-controller="scroll" class="h-96">
+          <%= render @messages, params:[current_user.id] %>
+        </div>
+        <%= render 'layouts/new_message_form' %>
+      </div>
+    <% end %>
+  </div>
+</div>
