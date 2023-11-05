@@ -1,18 +1,5 @@
 # frozen_string_literal: true
 
-class TurboFailureApp < Devise::FailureApp
-  def respond
-    if request_format == :turbo_stream
-      redirect
-    else
-      super
-    end
-  end
-
-  def skip_format?
-    %w[html turbo_stream */*].include? request_format.to_s
-  end
-end
 # Assuming you have not yet modified this file, each configuration option below
 # is set to its default value. Note that some are commented out while others
 # are not: uncommented lines are intended to protect your configuration from
@@ -27,26 +14,7 @@ Devise.setup do |config|
   # confirmation, reset password and unlock tokens in the database.
   # Devise will use the `secret_key_base` as its `secret_key`
   # by default. You can change it below and use your own secret key.
-  # config.secret_key = '8b4e401b7222babc16dfe04e9d77d698a60ffb96c7288541869b9e53f15f529235d28d7f67a835758f5f5d61660d80a421c637705bdddd86293aa75179764bf6'
-
-  # ==> Controller configuration
-  # Configure the parent class to the devise controllers.
-  config.parent_controller = 'TurboDeviseController'
-  # ...
-
-  # ==> Navigation configuration
-  # ...
-  config.navigational_formats = ['*/*', :html, :turbo_stream]
-
-  # ...
-
-  # ==> Warden configuration
-  # ...
-  config.warden do |manager|
-    manager.failure_app = TurboFailureApp
-    #   manager.intercept_401 = false
-    #   manager.default_strategies(scope: :user).unshift :some_external_strategy
-  end
+  # config.secret_key = '2b8dbab9dfb19d7f0a83d1c7de435ac9d36b393f858a358e089d021547b4225c2c6ae074fb0f89fd62aca5e46058b6876374f45fd62159a6e51938f6f945bb5f'
 
   # ==> Controller configuration
   # Configure the parent class to the devise controllers.
@@ -158,7 +126,7 @@ Devise.setup do |config|
   config.stretches = Rails.env.test? ? 1 : 12
 
   # Set up a pepper to generate the hashed password.
-  # config.pepper = '743a5ff100730e358ddc55df1fe2dcd297e1c867ae4fdf41a34891ffb16c59ca1d0a873eb0b6d3abcafbd2fd1ea08aa4251439d2e88a4242db17419b2312f0dd'
+  # config.pepper = 'e25a09762aa09815c45c14a0112017cb1a76eeebee76c64589afd0335ba463ba5c103ae8310b5ea92663b92c5b215b902878ff523453e5fd2d72e534126e0621'
 
   # Send a notification to the original email when the user's email is changed.
   # config.send_email_changed_notification = false
@@ -288,14 +256,14 @@ Devise.setup do |config|
 
   # ==> Navigation configuration
   # Lists the formats that should be treated as navigational. Formats like
-  # :html, should redirect to the sign in page when the user does not have
+  # :html should redirect to the sign in page when the user does not have
   # access, but formats like :xml or :json, should return 401.
   #
   # If you have any extra navigational formats, like :iphone or :mobile, you
   # should add them to the navigational formats lists.
   #
   # The "*/*" below is required to match Internet Explorer requests.
-  # config.navigational_formats = ['*/*', :html]
+  # config.navigational_formats = ['*/*', :html, :turbo_stream]
 
   # The default HTTP method used to sign out a resource. Default is :delete.
   config.sign_out_via = :delete
@@ -328,12 +296,14 @@ Devise.setup do |config|
   # so you need to do it manually. For the users scope, it would be:
   # config.omniauth_path_prefix = '/my_engine/users/auth'
 
-  # ==> Turbolinks configuration
-  # If your app is using Turbolinks, Turbolinks::Controller needs to be included to make redirection work correctly:
-  #
-  # ActiveSupport.on_load(:devise_failure_app) do
-  #   include Turbolinks::Controller
-  # end
+  # ==> Hotwire/Turbo configuration
+  # When using Devise with Hotwire/Turbo, the http status for error responses
+  # and some redirects must match the following. The default in Devise for existing
+  # apps is `200 OK` and `302 Found respectively`, but new apps are generated with
+  # these new defaults that match Hotwire/Turbo behavior.
+  # Note: These might become the new default in future versions of Devise.
+  config.responder.error_status = :unprocessable_entity
+  config.responder.redirect_status = :see_other
 
   # ==> Configuration for :registerable
 

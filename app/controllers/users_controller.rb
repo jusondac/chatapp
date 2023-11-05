@@ -10,7 +10,12 @@ class UsersController < ApplicationController
 
     @message = Message.new
     @messages = @single_room.messages.order(created_at: :asc)
-    render 'rooms/index'
+    render "rooms/index"
+  end
+
+  def login_system_auth
+    current_user = User.find(params[:user_id])
+    redirect_to root_path
   end
 
   private

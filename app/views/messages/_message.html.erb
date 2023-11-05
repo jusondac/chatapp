@@ -12,10 +12,13 @@
             <%= message.user.email[/\w+/].gsub("_"," ").capitalize unless message.room.is_private %>
           <% end %>
         </div>
-
         <div class="bg-gray-900 py-2 px-3 rounded-xl max-w-xl flex gap-3 shadow-xl text-sm text-gray-300">
           <div><%= message.body %></div>
-          <div class="text-[9px] flex items-end min-w-[45px] text-gray-400"><%= message.created_at.strftime("%H.%M %p") %></div>
+          <div class="text-[9px] flex items-end min-w-[45px] text-gray-400">
+            <div class="flex items-center gap-1">
+              <%= message.created_at.strftime("%H.%M %p") %>
+            </div>
+          </div>
         </div>
       </div>
     </div>

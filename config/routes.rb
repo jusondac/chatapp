@@ -12,7 +12,12 @@ Rails.application.routes.draw do
     registrations: 'users/registrations'
   }
   # Define your application routes per the DSL in https://guides.rubyonrails.org/routing.html
-  get 'user/:id', to: 'users#show', as: 'user'
+  # get 'user/:id', to: 'users#show', as: 'user'
+  resources :users, only: :show do
+    collection do
+      post :login_system_auth
+    end
+  end
   # Defines the root path route ("/")
   # root "articles#index"
 end
