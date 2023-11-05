@@ -1,6 +1,6 @@
 <%= turbo_frame_tag 'message_type' do %>
   <div class="pt-2">
-    <h4 class="font-bold">Ruang</h4>
+    <h4 class="font-bold text-white">Ruang</h4>
     <%= turbo_stream_from "rooms" %>
     <%= render 'layouts/new_room_form' %>
     <div id="rooms" class="flex flex-col gap-2 h-[250px] p-3 rounded-2xl border-gray-800 overflow-y-scroll ">
