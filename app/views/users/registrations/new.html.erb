@@ -1,11 +1,11 @@
-<div class="w-full h-full flex items-center justify-center flex-col">
+<div class="w-full h-screen flex items-center justify-center flex-col text-white">
 <h2 class="font-bold">Sign up</h2>
 
 <%= form_for(resource, as: resource_name, url: registration_path(resource_name)) do |f| %>
   <%= render "users/shared/error_messages", resource: resource %>
   <div class="flex flex-col items-center gap-3">
     <div class="field">
-      <%= f.email_field :email, placeholder:'email',autofocus: true, autocomplete: "email", class:'bg-gray-900 border rounded-full text-gray-400' %>
+      <%= f.email_field :email, placeholder:'email',autofocus: true, autocomplete: "email", class:'bg-gray-800 outline-none border-none rounded-xl text-gray-400' %>
     </div>
 
     <div class="field">
@@ -16,15 +16,15 @@
       <% if @minimum_password_length %>
       <em>(<%= @minimum_password_length %> characters minimum)</em>
       <% end %><br />
-      <%= f.password_field :password, autocomplete: "new-password", placeholder:'password',class:'bg-gray-900 border rounded-full text-gray-400'%>
+      <%= f.password_field :password, autocomplete: "new-password", placeholder:'password',class:'bg-gray-800 outline-none border-none rounded-xl text-gray-400' %>
     </div>
 
     <div class="field">
-      <%= f.password_field :password_confirmation, autocomplete: "new-password", placeholder:'password confirmation',class:'bg-gray-900 border rounded-full text-gray-400'%>
+      <%= f.password_field :password_confirmation, autocomplete: "new-password", placeholder:'password confirmation',class:'bg-gray-800 outline-none border-none rounded-xl text-gray-400' %>
     </div>
 
     <div class="actions">
-      <%= f.submit "Sign up", class:'bg-gray-800 rounded-full p-2' %>
+      <%= f.submit "Sign up", class:'bg-gray-800 rounded-xl p-2' %>
     </div>
   </div>
 <% end %>
