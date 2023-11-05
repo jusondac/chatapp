@@ -5390,3 +5390,23 @@ AppearanceChannel#away
   Rendered users/_status.html.erb (Duration: 0.1ms | Allocations: 57)
 [ActionCable] Broadcasting to user_status: "<turbo-stream action=\"replace\" target=\"user_1\"><template><turbo-frame id=\"user_status\"></turbo-frame>\n<div class=\"rounded-full text-xs font-italic bg-gray-900 w-20 flex items-center justify-center\" id=\"user_1\">\n  away\n</div>\n</template></turbo-stream>"
 Turbo::StreamsChannel transmitting "<turbo-stream action=\"replace\" target=\"user_1\"><template><turbo-frame id=\"user_status\"></turbo-frame>\n<div class=\"rounded-full text-xs font-italic bg-gray-900 w-20 flex items-center justify-center\" id=\"user_1\">\n  away\n</div>\n</template></turbo-stream>" (via streamed from user_status)
+AppearanceChannel#online
+  [1m[36mTRANSACTION (0.1ms)[0m  [1m[36mbegin transaction[0m
+  ↳ app/channels/appearance_channel.rb:34:in `broadcast_new_status'
+  [1m[36mUser Update (0.3ms)[0m  [1m[33mUPDATE "users" SET "status" = ?, "updated_at" = ? WHERE "users"."id" = ?[0m  [["status", 2], ["updated_at", "2023-11-05 20:11:17.336435"], ["id", 1]]
+  ↳ app/channels/appearance_channel.rb:34:in `broadcast_new_status'
+  [1m[36mTRANSACTION (2.4ms)[0m  [1m[36mcommit transaction[0m
+  ↳ app/channels/appearance_channel.rb:34:in `broadcast_new_status'
+  Rendered users/_status.html.erb (Duration: 0.2ms | Allocations: 57)
+[ActionCable] Broadcasting to user_status: "<turbo-stream action=\"replace\" target=\"user_1\"><template><turbo-frame id=\"user_status\"></turbo-frame>\n<div class=\"rounded-full text-xs font-italic bg-gray-900 w-20 flex items-center justify-center\" id=\"user_1\">\n  online\n</div>\n</template></turbo-stream>"
+Turbo::StreamsChannel transmitting "<turbo-stream action=\"replace\" target=\"user_1\"><template><turbo-frame id=\"user_status\"></turbo-frame>\n<div class=\"rounded-full text-xs font-italic bg-gray-900 w-20 flex items-center justify-center\" id=\"user_1\">\n  online\n</div>\n</template></turbo-stream>" (via streamed from user_status)
+AppearanceChannel#away
+  [1m[36mTRANSACTION (0.1ms)[0m  [1m[36mbegin transaction[0m
+  ↳ app/channels/appearance_channel.rb:34:in `broadcast_new_status'
+  [1m[36mUser Update (0.3ms)[0m  [1m[33mUPDATE "users" SET "status" = ?, "updated_at" = ? WHERE "users"."id" = ?[0m  [["status", 1], ["updated_at", "2023-11-05 20:11:22.337260"], ["id", 1]]
+  ↳ app/channels/appearance_channel.rb:34:in `broadcast_new_status'
+  [1m[36mTRANSACTION (2.5ms)[0m  [1m[36mcommit transaction[0m
+  ↳ app/channels/appearance_channel.rb:34:in `broadcast_new_status'
+  Rendered users/_status.html.erb (Duration: 0.2ms | Allocations: 57)
+[ActionCable] Broadcasting to user_status: "<turbo-stream action=\"replace\" target=\"user_1\"><template><turbo-frame id=\"user_status\"></turbo-frame>\n<div class=\"rounded-full text-xs font-italic bg-gray-900 w-20 flex items-center justify-center\" id=\"user_1\">\n  away\n</div>\n</template></turbo-stream>"
+Turbo::StreamsChannel transmitting "<turbo-stream action=\"replace\" target=\"user_1\"><template><turbo-frame id=\"user_status\"></turbo-frame>\n<div class=\"rounded-full text-xs font-italic bg-gray-900 w-20 flex items-center justify-center\" id=\"user_1\">\n  away\n</div>\n</template></turbo-stream>" (via streamed from user_status)
