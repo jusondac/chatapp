@@ -33,8 +33,12 @@
       <%= link_to 'Ruangan', group_chat_rooms_path, data:{turbo_frame: 'message_type'}, class:'bg-gray-800 rounded-lg w-1/2 p-1 text-center text-gray-300 shadow-2xl'  %>
     </div>
     <%= turbo_frame_tag 'message_type' do %>
-      <div class="w-full h-1/2 flex items-center justify-center text-gray-500 italic">
-        pilih pesan
+      <h4 class="font-bold mx-2 text-sm text-white">Obrolan</h4>
+      <div class="h-1/2 overflow-y-scroll">
+        <%= turbo_stream_from "users" %>
+        <div id="users">
+          <%= render @users %>
+        </div>
       </div>
     <% end %>
   </div>
@@ -51,7 +55,7 @@
             </div>
           <% end %>
         </div>
-        <div class="h-full">
+        <div class="h-[500px] p-2">
           <%= turbo_stream_from @single_room %>
           <div id="messages" data-controller="scroll" class="h-full">
             <%= render @messages, params:[current_user.id] %>

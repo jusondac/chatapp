@@ -1,10 +1,8 @@
 <div class="cont-<%=message.user.id%>">
-  <div class="rounded-xl my-1 flex items-center msg">
+  <div class="rounded-xl my-1 flex flex-col justify-center msg">
     <div class="flex gap-2 items-center">
-      <% unless message.room.is_private %>
-        <% unless message.previous_message.present? && message.previous_message.user_id.eql?(message.user.id) %>
-          <%= image_tag message.user.chat_avatar, class:'h-10 w-10 rounded-full object-cover' %>
-        <% end %>
+      <% unless check_before(message) %>
+        <%= image_tag message.user.chat_avatar, class:'h-10 w-10 rounded-full object-cover' %>
       <% end %>
       <div class="flex flex-col <%= message.previous_message.present? && message.previous_message.user_id.eql?(message.user.id) && message.room&.is_private.eql?(false) ? 'ml-5' : '' %>">
         <div class="text-xs text-gray-400 ml-1 user-display ">
@@ -12,7 +10,8 @@
             <%= message.user.email[/\w+/].gsub("_"," ").capitalize unless message.room.is_private %>
           <% end %>
         </div>
-        <div class="bg-gray-900 py-2 px-3 rounded-xl max-w-xl flex gap-3 shadow-xl text-sm text-gray-300">
+        <% unless message.body.empty? %>
+        <div class="bg-gray-900 py-2 px-3 rounded-xl max-w-xl flex gap-3 shadow-xl text-md text-gray-300 <%= check_before(message) ? "ml-12 " : "" %>">  
           <div><%= message.body %></div>
           <div class="text-[9px] flex items-end min-w-[45px] text-gray-400">
             <div class="flex items-center gap-1">
@@ -20,9 +19,11 @@
             </div>
           </div>
         </div>
+        <% end %>
       </div>
     </div>
-    <% if message.attachments.attached? %>
+    <div class="mt-2">
+      <% if message.attachments.attached? %>
       <% message.attachments.each_with_index do |attachment, index| %>
         <% if attachment.image? %>
           <%= image_tag(message.chat_attachment(index), class:'rounded-xl w-40') %>
@@ -35,5 +36,6 @@
         <% end %>
       <% end %>
     <% end %>
+    </div>
   </div>
 </div>
